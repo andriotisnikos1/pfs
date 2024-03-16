@@ -3,4 +3,4 @@ bun run link
 
 - test
 npx msl compile
-npx pfs files upload ./dist
+npx pfs files upload ./package.json -d hello.json

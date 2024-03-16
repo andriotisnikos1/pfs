@@ -1,14 +1,17 @@
 import { spinner } from "@clack/prompts";
 import _error from "../../../util/io/_error.js";
-import {getFileChunkStats} from "@andriotis/triple-dot"
+import * as td from "@andriotis/triple-dot"
+import { config } from "../../../central.config.js";
+
+const { getFileChunkStats } = td
 
 export default async function verifyAndStat(file: string) {
     try {
         // stat file
-        const s = spinner()
+        let s = spinner()
         s.start("Verifying file".yellow);
 
-        const fcStats = await getFileChunkStats(file, 5 * 1024);
+        const fcStats = await getFileChunkStats(file,config.files.upload.chunkSize);
         if (!fcStats) {
             s.stop("File not found".red,1);
             throw new Error();
@@ -25,12 +28,11 @@ export default async function verifyAndStat(file: string) {
             throw new Error();
         }
         //get upload type
-        const uploadType = stats.size > 5 * 1024 * 1024 ? "multipart" : "single";
+        const uploadType = stats.size > config.files.upload.chunkSize  * 1024 ? "multipart" : "single";
         s.stop("File verified".green);
         return { stats, uploadType, chunks }
     } catch (error) {
         _error("Unable to verify file", true);
         process.exit(1);
     }
-
 }

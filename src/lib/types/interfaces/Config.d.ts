@@ -1,7 +1,12 @@
 export interface Config {
-    server?: {
+    server: {
         host: string;
         port: number;
         authorization: string;
+    }
+    files: {
+        upload: {
+            chunkSize: number;
+        }
     }
 }
