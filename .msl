@@ -1,0 +1,6 @@
+- compile
+bun run link
+
+- test
+npx msl compile
+npx pfs files upload ./dist

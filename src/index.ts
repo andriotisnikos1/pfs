@@ -1,20 +1,11 @@
 #!/usr/bin/env node
+import "./central.config.js"
 import { program } from "commander";
-import cp from 'child_process';
+import "./global.declaration.js"
+
+const version = "0.0.1";
 
 program
-  .version('0.0.1')
-  .action(() => {
-    const child = cp.exec("npx pfs --version", (err, stdout, stderr) => {
-      if (err) {
-        console.error("[PFS Error]: Unable to check version");
-        return;
-      }
-      const version = stdout.trim();
-      // todo: check npm for new version
-    })});
-  
-export const serverURL = 
-
+  .version(version)
 
 program.parse(process.argv);
