@@ -10,7 +10,7 @@ program
             return;
         }
         const version = stdout.trim();
-        console.log(`PFS version: ${version}`);
+        // todo: check npm for new version
     });
 });
 program.parse(process.argv);

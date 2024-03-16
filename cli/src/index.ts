@@ -11,9 +11,10 @@ program
         return;
       }
       const version = stdout.trim();
-      console.log(`PFS version: ${version}`);
       // todo: check npm for new version
     })});
+  
+export const serverURL = 
 
 
 program.parse(process.argv);
