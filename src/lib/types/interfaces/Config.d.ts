@@ -3,6 +3,7 @@ export interface Config {
         host: string;
         port: number;
         authorization: string;
+        protocol: "http" | "https"
     }
     files: {
         upload: {

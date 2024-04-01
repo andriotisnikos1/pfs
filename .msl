@@ -1,6 +1,26 @@
 - compile
 bun run link
 
-- test
+- test_upload
 npx msl compile
-npx pfs files upload ./package.json -d hello.json
+npx pfs files upload bun.lockb -d files/bun.lockb
+
+- ls
+npx msl compile
+npx pfs files ls
+
+- dl
+npx msl compile
+npx pfs files download archive.zip -o hello/world/archive.zip
+
+- share
+npx msl compile
+npx pfs files share create archive.zip
+
+- list
+npx msl compile
+npx pfs files share list
+
+- expire
+npx msl compile
+npx pfs files share expire

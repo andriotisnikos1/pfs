@@ -2,10 +2,11 @@ import { spinner } from "@clack/prompts";
 import _error from "../../../util/io/_error.js";
 import * as td from "@andriotis/triple-dot"
 import { config } from "../../../central.config.js";
+import { verifyAndStatResponce } from "../../../lib/types/interfaces/verifyAndStatResponce.js";
 
 const { getFileChunkStats } = td
 
-export default async function verifyAndStat(file: string) {
+export default async function verifyAndStat(file: string): Promise<verifyAndStatResponce> {
     try {
         // stat file
         let s = spinner()
