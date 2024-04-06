@@ -1,5 +1,5 @@
 import express from 'express';
-import init from './init';
+import init from './init/handler';
 import status from './status';
 
 const router = express.Router();

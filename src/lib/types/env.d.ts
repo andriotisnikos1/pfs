@@ -6,5 +6,8 @@ declare namespace NodeJS {
         CF_BUCKET_NAME: string;
         CF_AUTH_KEY_ID: string;
         CF_AUTH_KEY_SECRET: string;
+        AUTH_USERNAME: string;
+        AUTH_PASSWORD: string;
+        MONGO_URI: string;
     }
 }
