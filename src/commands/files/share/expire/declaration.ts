@@ -1,6 +1,7 @@
 import { select } from "@clack/prompts";
 import { Command } from "commander";
 import { getListShare } from "../../getListShare.js";
+import _error from "../../../../util/io/_error.js";
 
 const command_filesShareExpire = new Command("expire");
 
@@ -17,7 +18,7 @@ command_filesShareExpire
             })
             console.log(choice)
         } catch (error) {
-
+            _error("Failed to expire sharing link ".red + String(error).yellow, true)
         }
     });
 
