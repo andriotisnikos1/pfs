@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import { dtb } from "../../../central.config";
-import { file } from "../../../lib/types/interfaces/file";
-import { share } from "../../../lib/types/interfaces/share";
+import { dtb } from "../../central.config";
+import { file } from "../../lib/types/interfaces/file";
+import { share } from "../../lib/types/interfaces/share";
 import crypto from "crypto"
 
 const shares = dtb.collection<share>("share")

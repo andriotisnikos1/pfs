@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { share } from "../../../lib/types/interfaces/share";
-import { dtb } from "../../../central.config";
+import { share } from "../../lib/types/interfaces/share";
+import { dtb } from "../../central.config";
 
 const shares = dtb.collection<share>("share")
 

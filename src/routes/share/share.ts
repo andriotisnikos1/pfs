@@ -1,8 +1,8 @@
 import express from 'express';
 import init from './init';
 import download from './download';
-import { share } from '../../../lib/types/interfaces/share';
-import { dtb } from '../../../central.config';
+import { share } from '../../lib/types/interfaces/share';
+import { dtb } from '../../central.config';
 import list from './list';
 
 const shares = dtb.collection<share>("share")
