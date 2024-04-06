@@ -1,10 +1,10 @@
 import { Command } from "commander";
-import { getListShare } from "../../getListShare.js";
+import { getListShare } from "../../files/getListShare.js";
 
 
-const command_filesShareList = new Command("list");
+const command_shareList = new Command("list");
 
-command_filesShareList
+command_shareList
     .description("List shared files")
     .action(async () => {
         const vis = await getListShare()
@@ -12,5 +12,5 @@ command_filesShareList
         console.log(vis?.visual.join("\n"))
     });
 
-export default command_filesShareList;
+export default command_shareList;
 

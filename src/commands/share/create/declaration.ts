@@ -1,12 +1,12 @@
 import { spinner } from "@clack/prompts";
 import axios from "axios";
 import { Command } from "commander";
-import { config, serverURL } from "../../../../central.config.js";
+import { config, serverURL } from "../../../central.config.js";
 
-const command_filesShareCreate = new Command("create");
+const command_shareCreate = new Command("create");
 
-command_filesShareCreate
-    .description("Share a file")
+command_shareCreate
+    .description("share a file")
     .argument("<path>", "The path to share")
     .option("-p, --password <password>", "The password to protect the file")
     .option("-e, --expires <expires>", "The expiration date of the file in seconds (Default: 1h - 3600s)")
@@ -23,7 +23,7 @@ command_filesShareCreate
             status: "success" | "error",
             message?: string,
             shareID?: string
-        }>(serverURL + "/files/share/init", {
+        }>(serverURL + "/share/init", {
             path,
             ...options
         }, {
@@ -35,8 +35,8 @@ command_filesShareCreate
             s.stop(res.data.message, 1)
             return
         }
-        const url = (serverURL + "/files/share/download/" + res.data.shareID! + (options.password ? `?p=${options.password}` : "")).yellow
+        const url = (serverURL + "/share/download/" + res.data.shareID! + (options.password ? `?p=${options.password}` : "")).yellow
         s.stop(`Done! "${path}" can now be accesed via ${url}`)
     });
 
-    export default command_filesShareCreate;
+    export default command_shareCreate;

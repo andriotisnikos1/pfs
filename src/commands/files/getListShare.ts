@@ -11,7 +11,7 @@ export async function getListShare() {
             list?: share[]
             status: "success" | "error"
             message?: string
-        }>(serverURL + "/files/share/list")
+        }>(serverURL + "/share/list")
         if (res.data.status === "error") {
             s.stop(res.data.message, 1)
             return

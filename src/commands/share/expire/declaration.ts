@@ -1,11 +1,11 @@
 import { select } from "@clack/prompts";
 import { Command } from "commander";
-import { getListShare } from "../../getListShare.js";
-import _error from "../../../../util/io/_error.js";
+import { getListShare } from "../../files/getListShare.js";
+import _error from "../../../util/io/_error.js";
 
-const command_filesShareExpire = new Command("expire");
+const command_shareExpire = new Command("expire");
 
-command_filesShareExpire
+command_shareExpire
     .description("Expire a sharing link")
     .action(async () => {
         try {
@@ -22,4 +22,4 @@ command_filesShareExpire
         }
     });
 
-export default command_filesShareExpire;
+export default command_shareExpire;
