@@ -1,6 +1,8 @@
 import { S3Client } from "@aws-sdk/client-s3";
 import checkRequiredEnv from "./util/core/checkRequiredEnv";
 import { MongoClient } from "mongodb";
+
+export const version = "0.0.1"
 checkRequiredEnv();
 export const s3 = new S3Client({
   region: "auto",
