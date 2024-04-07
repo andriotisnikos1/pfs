@@ -7,7 +7,7 @@ npx pfs files upload bun.lockb -d files/bun.lockb
 
 - ls
 npx msl compile
-npx pfs files ls
+npx pfs ls
 
 - dl
 npx msl compile

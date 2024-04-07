@@ -79,7 +79,8 @@ async function getProcedure(vs: verifyAndStatResponce, file: string, s: ReturnTy
             }, {
                 headers: {
                     Authorization: config.server.authorization
-                }
+                },
+                timeout: 1000 * 60 * 5
             })
             if (procedure.data.status.code === "rejected") {
                 s.stop("Server error. Please check your deployment".red, 1);

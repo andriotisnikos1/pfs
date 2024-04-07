@@ -16,7 +16,7 @@ export async function getListShare() {
             s.stop(res.data.message, 1)
             return
         }
-        s.stop()
+        s.stop("Fetched shared files")
         const visual = res.data.list!.map((share, index) => {
             const base = ">> ".cyan + share.path + " | "
             const hasPassword = share.password ? "Password protected".yellow : "No password".yellow
