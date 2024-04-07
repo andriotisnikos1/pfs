@@ -23,6 +23,7 @@ export default async (
     if (!deviceID) throw new Error("Missing deviceID (authorization header)");
     // reset any previous uploads
     await uploads.deleteMany({deviceID});
+    
     // check destination for leading slash
     if (body.destination.startsWith("/")) body.destination = body.destination.slice(1)
     const Key = body.destination === "" ? body.fileName : body.destination
