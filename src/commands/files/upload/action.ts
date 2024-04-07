@@ -49,6 +49,7 @@ export default async function actions_filesUpload(file: string, options: { desti
     }
 }
 
+// report status to server. needed for multipart uploads to be completed
 async function reportStatus(status: "success"| "error"){
     try {
         const res = await axios.post<{status: "success" | "error"}>(serverURL + "/files/upload/status", {
@@ -82,6 +83,7 @@ async function getProcedure(vs: verifyAndStatResponce, file: string, s: ReturnTy
                 },
                 timeout: 1000 * 60 * 5
             })
+            //check if procedure is valid
             if (procedure.data.status.code === "rejected") {
                 s.stop("Server error. Please check your deployment".red, 1);
                 throw new Error();

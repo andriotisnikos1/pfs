@@ -3,6 +3,7 @@ import fsp from "fs/promises"
 import os from "os"
 import { ConfigFile } from "../types/interfaces/Config.js"
 
+// default config in case the config file is empty
 const defaultConfig: ConfigFile = {
     server: null,
     files: {
@@ -26,9 +27,11 @@ async function verifyConfigFileExists(): Promise<void> {
 
 
 export default async function getFileConfig(): Promise<ConfigFile | null> {
+    // read and verify config
     const configFilePath = `${os.homedir()}/.pfs/config.json`
     await verifyConfigFileExists()
     let content = await fsp.readFile(configFilePath, { encoding: "utf-8" })
+    // check json validity
     let config: ConfigFile
     try {
         config = JSON.parse(content)
@@ -39,6 +42,7 @@ export default async function getFileConfig(): Promise<ConfigFile | null> {
     //get argv after the first argument
     const whitelistCheck = process.argv.slice(2).join(" ")
     const whitelistedCommands = ["hosts add", "hosts switch", "hosts ls"]
+    // check whitelist and non-existence of server
     if (!config.server && !whitelistedCommands.includes(whitelistCheck)) {
         log.warn("Hey there! It seems you haven't set up a server yet. Run `pfs hosts add` to add a server then `pfs hosts switch`.")
         process.exit(1)

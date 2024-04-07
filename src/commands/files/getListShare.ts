@@ -7,6 +7,7 @@ export async function getListShare() {
     try {
         const s = spinner()
         s.start("Fetching shared files")
+        // fetch shares
         const res = await axios.get<{
             list?: share[]
             status: "success" | "error"
@@ -17,12 +18,14 @@ export async function getListShare() {
             return
         }
         s.stop("Fetched shared files")
+        // process shares for visuals
         const visual = res.data.list!.map((share, index) => {
             const base = ">> ".cyan + share.path + " | "
-            const hasPassword = share.password ? "Password protected".yellow : "No password".yellow
+            const hasPassword = share.password ? "Protected".yellow : "No password".yellow
             const hasExpiry = (share.expires ? "Expires on " + new Date(share.expires).toLocaleString() : "No expiry").green
             const hasDownloadLimit = (share.maxDownloads ? "Max downloads: " + share.maxDownloads.toString() : "No download limit").blue
-            return base + hasPassword + " " + hasExpiry + " " + hasDownloadLimit
+            const url = serverURL + "/share/download/" + share.shareID + (share.password ? `?p=${share.password}` : "")
+            return base + hasPassword + " " + hasExpiry + " " + hasDownloadLimit + " | " + url.yellow
         })
         return {visual, list: res.data.list!}
     } catch (error) {

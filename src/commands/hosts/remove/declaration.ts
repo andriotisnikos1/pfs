@@ -16,10 +16,12 @@ command_hostsRemove
             const hosts = await getHosts();
             const map = hosts.map((host, index) => ">> ".cyan + host.friendlyName.yellow + ` (${host.host})`.cyan)
             const visual = hosts.map((host, index) => ({label: map[index], value: host.friendlyName}))
+            // select hosts to remove
             const choice = await multiselect({
                 message: "Select the hosts to remove",
                 options: visual
             }) as string[]
+            // remove hosts
             for (const host of choice) {
                 const s = spinner()
                 s.start("Removing host ".cyan + host.yellow)
@@ -34,16 +36,20 @@ command_hostsRemove
 
 async function removeHost(hostFriendlyName: string) {
     try {
+        // get config
         const config = await getFileConfig()
         if (!config) throw new Error("Failed to read config.json")
+        // get host details
         const hostToRemove = config.serverList.find(h => h.friendlyName === hostFriendlyName)
         if (!hostToRemove) throw new Error("Host not found")
+        // update config
         const newConfig = {
             server: config.server?.friendlyName === hostFriendlyName ? null : config.server,
             serverList: config.serverList.filter(h => h.friendlyName !== hostFriendlyName),
             files: config.files
         } satisfies ConfigFile
         await updateConfig(newConfig)
+        // inform the host to revoke the auth token
         const res = await axios.delete<{
             status: "success" | "error",
             message?: string
@@ -52,6 +58,7 @@ async function removeHost(hostFriendlyName: string) {
                 Authorization: hostToRemove.authorization
             }
         })
+        // error handling
         if (res.data.status === "error") throw new Error(res.data.message)
             return true
     } catch (error) {

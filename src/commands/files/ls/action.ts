@@ -22,6 +22,7 @@ export default async function actions_filesLs(options: {path?: string})  {
         }
     })
     if (res.data.status !== "success") throw new Error(res.data.message)
+    // process path for visuals, output
     options.path = options.path === undefined ? "" : options.path
     console.log("Directory listing of: "+ "./".yellow + options.path?.yellow)
     console.table(res.data.files)

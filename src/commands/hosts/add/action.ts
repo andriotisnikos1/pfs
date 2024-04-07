@@ -15,11 +15,14 @@ interface HostInput {
 
 export default async function action_hostsAdd() {
     try {
+        // input and ping
         const hostDetails = await getHostInput()
         const isHostAlive = await pingHost(hostDetails)
+        // check validity and auth
         if (!isHostAlive) throw new Error("The host is not reachable")
         const host = await authWithHost(hostDetails)
         if (!host) return
+        // save to config
         const s = spinner()
         s.start("Adding to config.json")
         const success = await saveHost(host)
@@ -48,11 +51,13 @@ async function saveHost(host: Server) {
     }
 }
 
+// ping the host to check if it is a PFS server
 async function pingHost(hostDetails: HostInput) {
     try {
         const { host, port, protocol } = hostDetails
         let s = spinner()
         s.start("Pinging the host")
+        // send ping
         const ping = await axios.get<{
             status: "success" | "error",
             identification: "PFS Host - Personal File System",
@@ -60,8 +65,10 @@ async function pingHost(hostDetails: HostInput) {
             authPermitted: boolean
         }>(`${protocol}://${String(host)}:${String(port)}/ping`)
         //ensure that the responce body has all the props - aka the server is a PFS server
+        // object keys verification
         if (Object.keys(ping.data).find(k => !["status", "identification", "version", "authPermitted"].includes(k)
         )) throw new Error("The server is not a PFS server")
+        // check for errors
         if (!ping.data.authPermitted) throw new Error("The server does not allow authentication")
         if (ping.data.status !== "success") throw new Error("The server is not responding")
         if (ping.data.identification !== "PFS Host - Personal File System") throw new Error("The server is not a PFS server")
@@ -74,11 +81,13 @@ async function pingHost(hostDetails: HostInput) {
 
 }
 
+// get deviceID from host
 async function authWithHost(hostDetails: HostInput) {
     try {
         const { host, port, protocol, basicAuth } = hostDetails
         const s = spinner()
         s.start("Authenticating with host")
+        // send request to get deviceID
         const res = await axios.get<{
             deviceID?: string,
             status: "success" | "error",
@@ -88,6 +97,7 @@ async function authWithHost(hostDetails: HostInput) {
                 Authorization: `Basic ${basicAuth}`
             }
         })
+        // visuals and format
         if (res.data.status === "error") throw new Error(res.data.message)
         s.stop("Authenticated successfully")
         return {

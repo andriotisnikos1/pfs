@@ -15,12 +15,14 @@ command_shareExpire
             if (!vis) return
             const s = spinner()
             const visual = vis.list.map((share, index) => ({label: vis.visual[index], value: share.shareID}))
+            // select shares to expire
             const choice = await multiselect({
                 message: "Select a sharing link to expire",
                 options: visual
             })
             if (!choice) return
             s.start("Expiring sharing link")
+            // send request to server
             const res = await  axios.post<{
                 status: "success" | "error"
                 message?: string
@@ -29,6 +31,7 @@ command_shareExpire
                     Authorization: config.server.authorization
                 }
             })
+            // output based on response
             switch (res.data.status) {
                 case "success":
                     s.stop("Expired sharing links")

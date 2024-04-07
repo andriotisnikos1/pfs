@@ -19,6 +19,7 @@ command_shareCreate
     }) => {
         const s = spinner()
         s.start("Initializing share")
+        // send request to server
         const res = await axios.post<{
             status: "success" | "error",
             message?: string,
@@ -31,10 +32,12 @@ command_shareCreate
                 Authorization: config.server.authorization
             }
         })
+        // output based on response
         if (res.data.status === "error") {
             s.stop(res.data.message, 1)
             return
         }
+        // share url
         const url = (serverURL + "/share/download/" + res.data.shareID! + (options.password ? `?p=${options.password}` : "")).yellow
         s.stop(`Done! "${path}" can now be accesed via ${url}`)
     });
