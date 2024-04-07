@@ -36,7 +36,10 @@ export default async function getFileConfig(): Promise<ConfigFile | null> {
         console.error("Error parsing config file")
         return null
     }
-    if (!config.server && !process.argv.join(" ").includes("hosts add")){
+    //get argv after the first argument
+    const whitelistCheck = process.argv.slice(2).join(" ")
+    const whitelistedCommands = ["hosts add", "hosts switch"]
+    if (!config.server && !whitelistedCommands.includes(whitelistCheck)) {
         log.warn("Hey there! It seems you haven't set up a server yet. Run `pfs hosts add` to add a server then `pfs hosts switch`.")
         process.exit(1)
     }

@@ -1,13 +1,7 @@
-import { Server } from "../../lib/types/interfaces/server";
+import getFileConfig from "../../lib/root/getFileConfig.js";
 
 export async function getHosts() {
-    return [
-        {
-            authorization: "device_token",
-            friendlyName: "main",
-            host: "coding",
-            port: 8080,
-            protocol: "http"
-        }
-    ] satisfies Server[]
+    const config = await getFileConfig()
+    if (!config) return []
+    return config.serverList
 }

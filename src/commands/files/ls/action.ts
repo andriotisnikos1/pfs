@@ -26,20 +26,3 @@ export default async function actions_filesLs(options: {path?: string})  {
     console.log("Directory listing of: "+ "./".yellow + options.path?.yellow)
     console.table(res.data.files)
 }
-
-
-
-function printLS(options: {path?: string}, files: Res["files"]) {
-    options.path = options.path === undefined ? "" : options.path
-    
-    console.log("\nDirectories".cyan)
-    console.log("-----------".cyan)
-    files?.filter(f => f.type === "directory").forEach(f => {
-        console.log(f.name)
-    })
-    console.log("\nFiles".cyan)
-    console.log("-----".cyan)
-    files?.filter(f => f.type === "file").forEach(f => {
-        console.log(f.name + " " + `(${prettySize(f.size)})`)
-    })
-}
