@@ -9,7 +9,7 @@ const command_hostsSwitch = new Command("switch");
 
 command_hostsSwitch
     .description("Remove a host")
-    .action(async() => {
+    .action( async() => {
         try {
             const hosts = await getHosts();
             const map = hosts.map((host, index) => ">> ".cyan + host.friendlyName.yellow + ` (${host.host})`.cyan)
