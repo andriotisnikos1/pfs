@@ -1,7 +1,7 @@
 import axios from "axios";
 import { share } from "../../lib/types/interfaces/share.js"
 import { spinner } from "@clack/prompts";
-import { serverURL } from "../../central.config.js"
+import { config, serverURL } from "../../central.config.js"
 
 export async function getListShare() {
     try {
@@ -12,7 +12,11 @@ export async function getListShare() {
             list?: share[]
             status: "success" | "error"
             message?: string
-        }>(serverURL + "/share/list")
+        }>(serverURL + "/share/list", {
+            headers: {
+                Authorization: config.server.authorization
+            }
+        })
         if (res.data.status === "error") {
             s.stop(res.data.message, 1)
             return

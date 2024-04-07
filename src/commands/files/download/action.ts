@@ -1,5 +1,5 @@
 import axios from "axios";
-import { serverURL } from "../../../central.config.js";
+import { config, serverURL } from "../../../central.config.js";
 import fs from "fs";
 import { spinner } from "@clack/prompts";
 import { prettySize } from "../../../util/io/prettySize.js";
@@ -32,6 +32,10 @@ export default async function actions_filesDownload(path: string, options: { out
         }>(serverURL + "/files/download", {
             path,
             chunkSize: 200
+        }, {
+            headers: {
+                Authorization: config.server.authorization
+            }
         })
         const url = res.data.url
         // check if response is valid
