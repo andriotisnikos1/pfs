@@ -1,6 +1,6 @@
 {
   "name": "@andriotis/pfs",
-  "version": "0.0.2",
+  "version": "0.0.21",
   "main": "dist/index.js",
   "bin": {
     "pfs": "dist/index.js"
